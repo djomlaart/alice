@@ -3,6 +3,8 @@ import deadpixel.keystone.*;
 
 
 int m = 1000;
+int s = 0;
+int inactive = 40;
 
 Movie currentMovie;
 int numParts = 5;  //broj razlicitih tipova istog filma
@@ -68,12 +70,13 @@ void draw() {
   }
   image(currentMovie, 0,0);
    
-  int t = (minute()-m);
+  int t = (minute()*60+second()-m*60-s);
   print(t);
 
-  if (t>=1 && trailer ==0)
+  if (t>=inactive && trailer ==0)
   {
     m = minute();
+    s = second();
     currentMovie.stop();
     currentMovie = new Movie(this, outro_path);
     currentMovie.play();
@@ -113,6 +116,7 @@ void draw() {
 
 void mouseReleased() {
   m = minute();
+  s = second();
   
   //turn the trailer off
   trailer =0;
