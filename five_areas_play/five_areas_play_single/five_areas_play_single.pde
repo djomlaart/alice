@@ -121,34 +121,48 @@ void jumpWhere() {
   }
 }
 
+
+
 //na osnovu dela ekrana na koji smo kliknuli, ucitava film iz te grupe za pustanje
 void goTo(String group)
 {
   //ovo znaci da smo kliknuli na neki drugi frejm
   if (group != currentGroup){
-    k = videos_speed.get(currentGroup)/videos_speed.get(group);
-    Movie nextMovie = null;
+    //k = videos_speed.get(currentGroup)/videos_speed.get(group);
     
-    if (group == "A")
-    {
-      nextMovie = new Movie(this, AMovies.get(currentNumber));
-    }
-    else if (group == "B")
-    {nextMovie = new Movie(this, BMovies.get(currentNumber));}
-    else if (group == "C")
-    {nextMovie = new Movie(this, CMovies.get(currentNumber));}
-    else if (group == "D")
-    {nextMovie = new Movie(this, DMovies.get(currentNumber));}
-    else if (group == "E")
-    {nextMovie = new Movie(this, EMovies.get(currentNumber));}
-    else
-    {print("error");}
-       
-    howtoJump(nextMovie, k);
-    
+    currentMovie.speed(videos_speed.get(group));
     currentGroup = group; 
   }
 }
+
+////na osnovu dela ekrana na koji smo kliknuli, ucitava film iz te grupe za pustanje
+//void goTo(String group)
+//{
+//  //ovo znaci da smo kliknuli na neki drugi frejm
+//  if (group != currentGroup){
+//    k = videos_speed.get(currentGroup)/videos_speed.get(group);
+//    Movie nextMovie = null;
+    
+//    if (group == "A")
+//    {
+//      nextMovie = new Movie(this, AMovies.get(currentNumber));
+//    }
+//    else if (group == "B")
+//    {nextMovie = new Movie(this, BMovies.get(currentNumber));}
+//    else if (group == "C")
+//    {nextMovie = new Movie(this, CMovies.get(currentNumber));}
+//    else if (group == "D")
+//    {nextMovie = new Movie(this, DMovies.get(currentNumber));}
+//    else if (group == "E")
+//    {nextMovie = new Movie(this, EMovies.get(currentNumber));}
+//    else
+//    {print("error");}
+       
+//    howtoJump(nextMovie, k);
+    
+//    currentGroup = group; 
+//  }
+//}
 
 
 //funkcija koja posta na rand sledeci video kad se jedan zavrsi

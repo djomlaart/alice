@@ -2,6 +2,7 @@ import processing.video.*;
 import deadpixel.keystone.*;
 
 
+int m = 1000;
 
 Movie currentMovie;
 int numParts = 5;  //broj razlicitih tipova istog filma
@@ -15,11 +16,13 @@ StringList EMovies = new StringList();
 
 
 String mpath = "/Users/mladenlazarevic/Desktop/tesla_test/";  //path do foldera
-//String intro_path = 
-//String outro_path = 
+String intro_path = "/Users/mladenlazarevic/Desktop/TENK/MVI_8572.MOV";
+String outro_path = "/Users/mladenlazarevic/Desktop/TENK/MVI_8572.MOV";
+String trailer_path = "/Users/mladenlazarevic/Desktop/TENK/MVI_8583.MOV";
 
 int intro_running = 1;
 int outro_running = 0;
+int trailer = 0;
 
 FloatDict videos_speed;
 
@@ -45,7 +48,7 @@ void setup() {
   
   
   currentNumber = floor(random(0,numMovies)); //ovo se menja kad se ne klikce
-  currentMovie = new Movie(this, AMovies.get(currentNumber));
+  currentMovie = new Movie(this, intro_path);
   currentGroup = "A";
   currentMovie.play();
   
@@ -64,23 +67,55 @@ void draw() {
     currentMovie.read();
   }
   image(currentMovie, 0,0);
-  
-  
+   
+  int t = (minute()-m);
+  print(t);
+
+  if (t>=1 && trailer ==0)
+  {
+    m = minute();
+    currentMovie.stop();
+    currentMovie = new Movie(this, outro_path);
+    currentMovie.play();
+    trailer = 1;
+    outro_running =1;
+  }
   
   float mt = currentMovie.time();
   float md = currentMovie.duration();
+  
   if (mt==md){
+    outro_running=0;
+    
+    if (trailer ==0){
     play_rand(currentGroup);
+    
+    }
+    else
+    {
+      currentMovie.stop();
+      currentMovie = new Movie(this, trailer_path);
+      currentMovie.play();
+    }
     
     //set flag that intro is finished
     if (intro_running == 1) {
       intro_running = 0;
+      
+      currentMovie.stop();
+      currentMovie = new Movie(this, AMovies.get(currentNumber));
+      currentGroup = "A";
+      currentMovie.play();
     }
   }
 }
 
 
 void mouseReleased() {
+  m = minute();
+  
+  //turn the trailer off
+  trailer =0;
   
   if (intro_running != 1 && outro_running != 1) {
     jumpWhere();// myMovie.jump(random(myMovie.duration()));
